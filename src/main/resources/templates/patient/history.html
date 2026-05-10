@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Medical History</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            background: #f4f7fb;
+            padding: 40px;
+        }
+
+        .card{
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2{
+            color: #0077b6;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<h1>
+    Medical History
+</h1>
+
+<div class="card"
+     th:each="a : ${appointments}">
+
+    <h2>
+
+        Appointment #
+        <span th:text="${a.id}"></span>
+
+    </h2>
+
+    <p>
+
+        <strong>Doctor:</strong>
+
+        <span th:text="${a.doctor.user.username}">
+        </span>
+
+    </p>
+
+    <p>
+
+        <strong>Date:</strong>
+
+        <span th:text="${a.appointmentDate}">
+        </span>
+
+    </p>
+
+    <p>
+
+        <strong>Status:</strong>
+
+        <span th:text="${a.status}">
+        </span>
+
+    </p>
+
+    <div th:if="${a.medicalRecords != null and !a.medicalRecords.isEmpty()}">
+
+        <div th:each="mr : ${a.medicalRecords}">
+
+            <hr>
+
+            <p>
+
+                <strong>Symptoms:</strong>
+
+                <span th:text="${mr.symptoms}">
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>Diagnosis:</strong>
+
+                <span th:text="${mr.diagnosis}">
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>Notes:</strong>
+
+                <span th:text="${mr.notes}">
+                </span>
+
+            </p>
+
+            <div th:if="${mr.prescription != null}">
+
+                <h3>
+                    Prescription
+                </h3>
+
+                <div th:each="d : ${mr.prescription.details}">
+
+                    <p>
+
+                        <strong>Medicine:</strong>
+
+                        <span th:text="${d.medicine.name}">
+                        </span>
+
+                    </p>
+
+                    <p>
+
+                        <strong>Quantity:</strong>
+
+                        <span th:text="${d.quantity}">
+                        </span>
+
+                    </p>
+
+                    <hr>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

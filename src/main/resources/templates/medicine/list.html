@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine List</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins', sans-serif;
+        }
+
+        body{
+            background:#eef1f8;
+            min-height:100vh;
+        }
+
+        .dashboard{
+            display:flex;
+            min-height:100vh;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar{
+            width:110px;
+            background:#bfc8f3;
+            display:flex;
+            flex-direction:column;
+            justify-content:space-between;
+            align-items:center;
+            padding:30px 0;
+            border-radius:0 30px 30px 0;
+        }
+
+        .sidebar-top{
+            display:flex;
+            flex-direction:column;
+            gap:30px;
+        }
+
+        .logo{
+            width:58px;
+            height:58px;
+            border-radius:50%;
+            background:#5b47c5;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:white;
+            font-size:22px;
+            box-shadow:0 10px 20px rgba(91,71,197,0.3);
+        }
+
+        .menu-item{
+            width:58px;
+            height:58px;
+            border-radius:18px;
+            background:white;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#5b47c5;
+            font-size:20px;
+            transition:0.3s;
+            cursor:pointer;
+            text-decoration:none;
+        }
+
+        .menu-item.active{
+            background:#5b47c5;
+            color:white;
+            box-shadow:0 10px 20px rgba(91,71,197,0.3);
+        }
+
+        .menu-item:hover{
+            transform:translateY(-3px);
+        }
+
+        /* MAIN */
+
+        .main{
+            flex:1;
+            padding:40px;
+        }
+
+        .top-bar{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:35px;
+        }
+
+        .title h1{
+            font-size:42px;
+            color:#222;
+        }
+
+        .title p{
+            color:#888;
+            margin-top:8px;
+            font-size:14px;
+            letter-spacing:1px;
+        }
+
+        .admin-box{
+            background:white;
+            padding:15px 25px;
+            border-radius:14px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.05);
+            color:#555;
+        }
+
+        /* TABLE CARD */
+
+        .table-card{
+            background:white;
+            padding:35px;
+            border-radius:28px;
+            box-shadow:0 15px 35px rgba(0,0,0,0.05);
+        }
+
+        .table-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:30px;
+        }
+
+        .table-header h2{
+            color:#222;
+            font-size:28px;
+        }
+
+        .create-btn{
+            padding:14px 22px;
+            background:#5b47c5;
+            color:white;
+            border-radius:14px;
+            text-decoration:none;
+            font-weight:600;
+            transition:0.3s;
+            box-shadow:0 10px 20px rgba(91,71,197,0.25);
+        }
+
+        .create-btn:hover{
+            background:#4837a7;
+            transform:translateY(-2px);
+        }
+
+        /* TABLE */
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+        }
+
+        thead{
+            background:#5b47c5;
+            color:white;
+        }
+
+        thead th{
+            padding:18px;
+            text-align:left;
+            font-size:15px;
+            font-weight:600;
+        }
+
+        thead th:first-child{
+            border-radius:14px 0 0 14px;
+        }
+
+        thead th:last-child{
+            border-radius:0 14px 14px 0;
+        }
+
+        tbody tr{
+            transition:0.3s;
+            border-bottom:1px solid #f1f1f1;
+        }
+
+        tbody tr:hover{
+            background:#f8f9ff;
+        }
+
+        tbody td{
+            padding:20px 18px;
+            color:#555;
+            font-size:15px;
+        }
+
+        .price{
+            font-weight:600;
+            color:#19b36b;
+        }
+
+        /* BUTTONS */
+
+        .action-buttons{
+            display:flex;
+            gap:10px;
+        }
+
+        .edit-btn,
+        .delete-btn{
+            padding:10px 16px;
+            border-radius:12px;
+            text-decoration:none;
+            font-size:14px;
+            font-weight:600;
+            transition:0.3s;
+        }
+
+        .edit-btn{
+            background:#fff3cd;
+            color:#d39e00;
+        }
+
+        .edit-btn:hover{
+            background:#f5c842;
+            color:white;
+        }
+
+        .delete-btn{
+            background:#ffe3e3;
+            color:#e74c3c;
+        }
+
+        .delete-btn:hover{
+            background:#e74c3c;
+            color:white;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:900px){
+
+            .table-card{
+                overflow-x:auto;
+            }
+
+            table{
+                min-width:700px;
+            }
+
+        }
+
+        @media(max-width:768px){
+
+            .dashboard{
+                flex-direction:column;
+            }
+
+            .sidebar{
+                width:100%;
+                height:90px;
+                flex-direction:row;
+                border-radius:0;
+                padding:0 20px;
+            }
+
+            .sidebar-top{
+                flex-direction:row;
+            }
+
+            .main{
+                padding:20px;
+            }
+
+            .title h1{
+                font-size:30px;
+            }
+
+            .table-header{
+                flex-direction:column;
+                gap:20px;
+                align-items:flex-start;
+            }
+
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="sidebar-top">
+
+            <div class="logo">
+                <i class="fa-solid fa-prescription-bottle-medical"></i>
+            </div>
+
+            <a href="/dashboard" class="menu-item">
+                <i class="fa-solid fa-chart-line"></i>
+            </a>
+
+            <a href="/admin/medicines" class="menu-item active">
+                <i class="fa-solid fa-pills"></i>
+            </a>
+
+            <a href="#" class="menu-item">
+                <i class="fa-solid fa-users"></i>
+            </a>
+
+            <a href="#" class="menu-item">
+                <i class="fa-solid fa-file-medical"></i>
+            </a>
+
+        </div>
+
+        <a href="/logout" class="menu-item">
+            <i class="fa-solid fa-right-from-bracket"></i>
+        </a>
+
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+
+        <div class="top-bar">
+
+            <div class="title">
+                <h1>Medicine List</h1>
+                <p>PHARMACY MANAGEMENT SYSTEM</p>
+            </div>
+
+            <div class="admin-box">
+                Admin Panel
+            </div>
+
+        </div>
+
+        <!-- TABLE CARD -->
+        <div class="table-card">
+
+            <div class="table-header">
+
+                <h2>All Medicines</h2>
+
+                <a href="/admin/medicines/create" class="create-btn">
+                    <i class="fa-solid fa-plus"></i>
+                    Create Medicine
+                </a>
+
+            </div>
+
+            <table>
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Stock</th>
+                    <th>Price</th>
+                    <th width="220">Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="m : ${medicines}">
+
+                    <td th:text="${m.id}"></td>
+
+                    <td th:text="${m.name}"></td>
+
+                    <td th:text="${m.stockQuantity}"></td>
+
+                    <td class="price">
+                        $<span th:text="${m.price}"></span>
+                    </td>
+
+                    <td>
+
+                        <div class="action-buttons">
+
+                            <a th:href="@{'/admin/medicines/edit/' + ${m.id}}"
+                               class="edit-btn">
+
+                                <i class="fa-solid fa-pen"></i>
+                                Edit
+
+                            </a>
+
+                            <a th:href="@{'/admin/medicines/delete/' + ${m.id}}"
+                               class="delete-btn"
+                               onclick="return confirm('Are you sure you want to delete this medicine?')">
+
+                                <i class="fa-solid fa-trash"></i>
+                                Delete
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Doctor Dashboard</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            background-color: #f4f7fb;
+            padding: 40px;
+        }
+
+        .card{
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        table{
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td{
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        a{
+            padding: 8px 15px;
+            background: #0077b6;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<h1>
+    Doctor Dashboard
+</h1>
+
+<div class="card">
+
+    <h2>
+        Waiting Patients
+    </h2>
+
+    <table>
+
+        <tr>
+            <th>Patient</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Action</th>
+        </tr>
+
+        <tr th:each="a : ${appointments}">
+
+            <td th:text="${a.patient.username}">
+            </td>
+
+            <td th:text="${a.appointmentDate}">
+            </td>
+
+            <td th:text="${a.appointmentTime}">
+            </td>
+
+            <td>
+
+                <a th:href="@{'/doctor/examination/' + ${a.id}}">
+                    Examine
+                </a>
+
+            </td>
+
+        </tr>
+
+    </table>
+
+</div>
+
+</body>
+</html>

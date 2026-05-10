@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Booking</title>
+</head>
+<body>
+
+<h1>Select Specialty</h1>
+
+<div th:each="s : ${specialties}">
+
+    <a th:href="@{'/patient/specialty/' + ${s.id} + '/doctors'}">
+
+        <span th:text="${s.name}"></span>
+
+    </a>
+
+    <br>
+
+</div>
+
+</body>
+</html>

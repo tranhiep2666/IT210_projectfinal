@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Patient Profile</title>
+
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fb;
+        }
+
+        /* HEADER */
+
+        header{
+            background-color: #0077b6;
+            color: white;
+
+            padding: 20px 60px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo{
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        nav a{
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 16px;
+        }
+
+        /* CONTAINER */
+
+        .container{
+            max-width: 1100px;
+            margin: 50px auto;
+
+            display: grid;
+            grid-template-columns: 320px 1fr;
+
+            gap: 30px;
+        }
+
+        /* PROFILE CARD */
+
+        .profile-card{
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 30px;
+
+            text-align: center;
+
+            box-shadow:
+                    0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .avatar{
+            width: 130px;
+            height: 130px;
+
+            border-radius: 50%;
+
+            margin: auto;
+
+            background-image:
+                    url('https://cdn-icons-png.flaticon.com/512/3135/3135715.png');
+
+            background-size: cover;
+            background-position: center;
+
+            margin-bottom: 20px;
+        }
+
+        .profile-card h2{
+            color: #023e8a;
+            margin-bottom: 10px;
+        }
+
+        .profile-card p{
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        /* PROFILE FORM */
+
+        .profile-form{
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 40px;
+
+            box-shadow:
+                    0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .profile-form h2{
+            margin-bottom: 30px;
+            color: #023e8a;
+        }
+
+        .form-group{
+            margin-bottom: 20px;
+        }
+
+        label{
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input,
+        select,
+        textarea{
+
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+        }
+
+        textarea{
+            resize: vertical;
+            height: 100px;
+        }
+
+        .row{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .btn{
+            background-color: #0077b6;
+            color: white;
+
+            border: none;
+
+            padding: 14px 30px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 16px;
+        }
+
+        .btn:hover{
+            background-color: #005f8f;
+        }
+
+        footer{
+            background-color: #023e8a;
+            color: white;
+
+            text-align: center;
+
+            padding: 20px;
+
+            margin-top: 50px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="logo">
+        Smart Healthcare
+    </div>
+
+    <nav>
+
+        <a href="/patient/dashboard">
+            Home
+        </a>
+
+        <a href="/patient/booking">
+            Booking
+        </a>
+
+        <a href="/patient/history">
+            History
+        </a>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+<!-- MAIN CONTENT -->
+
+<div class="container">
+
+    <!-- LEFT PROFILE CARD -->
+
+    <div class="profile-card">
+
+        <div class="avatar"></div>
+
+        <h2 th:text="${profile.fullName}">
+            John Doe
+        </h2>
+
+        <p th:text="${user.email}">
+            johndoe@gmail.com
+        </p>
+
+        <p>
+            Patient Account
+        </p>
+
+    </div>
+
+    <!-- RIGHT FORM -->
+
+    <div class="profile-form">
+
+        <h2>
+            Personal Information
+        </h2>
+
+        <form th:action="@{/patient/profile/update}"
+              method="post"
+              th:object="${profile}">
+            <input type="hidden" th:field="*{id}">
+
+            <div class="row">
+
+                <div class="form-group">
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <input type="text"
+                           th:field="*{fullName}">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Phone Number
+                    </label>
+
+                    <input type="text"
+                           th:field="*{phone}">
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="form-group">
+
+                    <label>
+                        Gender
+                    </label>
+
+                    <select th:field="*{gender}">
+
+                        <option value="Male">
+                            Male
+                        </option>
+
+                        <option value="Female">
+                            Female
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        Date of Birth
+                    </label>
+
+                    <input type="date"
+                           th:field="*{dateOfBirth}">
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Address
+                </label>
+
+                <textarea th:field="*{address}">
+                </textarea>
+
+            </div>
+
+            <button type="submit"
+                    class="btn">
+
+                Update Profile
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+
+    © 2025 Smart Healthcare Platform.
+    All rights reserved.
+
+</footer>
+
+</body>
+</html>
