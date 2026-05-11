@@ -9,58 +9,34 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AppointmentServiceImpl
-        implements AppointmentService {
-
+public class AppointmentServiceImpl implements AppointmentService {
     private final AppointmentRepository appointmentRepository;
-
     private final DoctorRepository doctorRepository;
-
     private final UserRepository userRepository;
-
     @Override
     public void book(
             AppointmentRequest request,
             String username
     ) {
-
         User patient = userRepository
                 .findByUsername(username)
                 .orElseThrow();
-
         Doctor doctor = doctorRepository
                 .findById(request.getDoctorId())
                 .orElseThrow();
-
-        boolean existed =
-                appointmentRepository
-                        .existsByDoctorAndAppointmentDateAndAppointmentTime(
-                                doctor,
-                                request.getAppointmentDate(),
-                                request.getAppointmentTime()
-                        );
-
+        boolean existed = appointmentRepository.existsByDoctorAndAppointmentDateAndAppointmentTime(
+                doctor, request.getAppointmentDate(), request.getAppointmentTime());
         if (existed) {
-            throw new RuntimeException(
-                    "This slot is already booked"
-            );
+            throw new RuntimeException("This slot is already booked");
         }
-
-        Appointment appointment =
-                Appointment.builder()
+        Appointment appointment = Appointment.builder()
                         .patient(patient)
                         .doctor(doctor)
-                        .appointmentDate(
-                                request.getAppointmentDate()
-                        )
-                        .appointmentTime(
-                                request.getAppointmentTime()
-                        )
+                        .appointmentDate(request.getAppointmentDate())
+                        .appointmentTime(request.getAppointmentTime())
                         .reason(request.getReason())
                         .status(AppointmentStatus.WAITING)
                         .build();
-
         appointmentRepository.save(appointment);
-
     }
 }

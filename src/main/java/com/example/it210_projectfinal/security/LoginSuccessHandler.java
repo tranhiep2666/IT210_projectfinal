@@ -11,37 +11,29 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class LoginSuccessHandler
-        implements AuthenticationSuccessHandler {
-
+public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(
             HttpServletRequest request,
             HttpServletResponse response,
             Authentication authentication
     ) throws IOException, ServletException {
-
         for (GrantedAuthority authority :
                 authentication.getAuthorities()) {
-
             String role = authority.getAuthority();
-
             if (role.equals("ROLE_ADMIN")) {
                 response.sendRedirect("/admin/dashboard");
                 return;
             }
-
             if (role.equals("ROLE_DOCTOR")) {
                 response.sendRedirect("/doctor/dashboard");
                 return;
             }
-
             if (role.equals("ROLE_PATIENT")) {
                 response.sendRedirect("/patient/dashboard");
                 return;
             }
         }
-
         response.sendRedirect("/auth/login");
     }
 }

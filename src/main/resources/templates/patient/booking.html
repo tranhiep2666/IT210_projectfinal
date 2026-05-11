@@ -1,21 +1,319 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Booking</title>
+    <title>Book Appointment</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins', sans-serif;
+        }
+
+        body{
+            background:#eef1f8;
+            min-height:100vh;
+        }
+
+        .dashboard{
+            display:flex;
+            min-height:100vh;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar{
+            width:110px;
+            background:#bfc8f3;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:space-between;
+            padding:30px 0;
+            border-radius:0 30px 30px 0;
+        }
+
+        .sidebar-top{
+            display:flex;
+            flex-direction:column;
+            gap:30px;
+        }
+
+        .logo{
+            width:58px;
+            height:58px;
+            background:#5b47c5;
+            border-radius:50%;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            color:white;
+            font-size:22px;
+            box-shadow:0 10px 20px rgba(91,71,197,0.3);
+        }
+
+        .menu-item{
+            width:58px;
+            height:58px;
+            border-radius:18px;
+            background:white;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#5b47c5;
+            font-size:20px;
+            transition:0.3s;
+            cursor:pointer;
+            text-decoration:none;
+        }
+
+        .menu-item.active{
+            background:#5b47c5;
+            color:white;
+            box-shadow:0 10px 20px rgba(91,71,197,0.3);
+        }
+
+        .menu-item:hover{
+            transform:translateY(-3px);
+        }
+
+        /* MAIN */
+
+        .main{
+            flex:1;
+            padding:40px;
+        }
+
+        .top-bar{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:35px;
+        }
+
+        .title h1{
+            font-size:42px;
+            color:#202020;
+        }
+
+        .title p{
+            color:#888;
+            margin-top:8px;
+            font-size:14px;
+            letter-spacing:1px;
+        }
+
+        .patient-box{
+            background:white;
+            padding:15px 25px;
+            border-radius:14px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.05);
+            color:#555;
+        }
+
+        /* SPECIALTY GRID */
+
+        .specialty-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+            gap:25px;
+        }
+
+        .specialty-card{
+            background:white;
+            border-radius:24px;
+            padding:35px 30px;
+            text-decoration:none;
+            color:inherit;
+            box-shadow:0 10px 30px rgba(0,0,0,0.05);
+            transition:0.3s;
+            position:relative;
+            overflow:hidden;
+        }
+
+        .specialty-card:hover{
+            transform:translateY(-6px);
+        }
+
+        .specialty-icon{
+            width:65px;
+            height:65px;
+            border-radius:18px;
+            background:#eee9ff;
+            color:#5b47c5;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:26px;
+            margin-bottom:25px;
+        }
+
+        .specialty-card h2{
+            font-size:24px;
+            color:#222;
+            margin-bottom:12px;
+        }
+
+        .specialty-card p{
+            color:#777;
+            line-height:1.7;
+            font-size:15px;
+        }
+
+        .arrow{
+            position:absolute;
+            top:30px;
+            right:30px;
+            color:#5b47c5;
+            font-size:20px;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:900px){
+
+            .dashboard{
+                flex-direction:column;
+            }
+
+            .sidebar{
+                width:100%;
+                height:90px;
+                flex-direction:row;
+                border-radius:0;
+                padding:0 20px;
+            }
+
+            .sidebar-top{
+                flex-direction:row;
+            }
+
+            .main{
+                padding:20px;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 <body>
 
-<h1>Select Specialty</h1>
+<div class="dashboard">
 
-<div th:each="s : ${specialties}">
+    <!-- SIDEBAR -->
 
-    <a th:href="@{'/patient/specialty/' + ${s.id} + '/doctors'}">
+    <div class="sidebar">
 
-        <span th:text="${s.name}"></span>
+        <div class="sidebar-top">
 
-    </a>
+            <div class="logo">
+                <i class="fa-solid fa-heart-pulse"></i>
+            </div>
 
-    <br>
+            <a href="/patient/dashboard"
+               class="menu-item">
+
+                <i class="fa-solid fa-house"></i>
+
+            </a>
+
+            <a href="/patient/booking"
+               class="menu-item active">
+
+                <i class="fa-solid fa-calendar-check"></i>
+
+            </a>
+
+            <a href="/patient/appointments"
+               class="menu-item">
+
+                <i class="fa-solid fa-clock-rotate-left"></i>
+
+            </a>
+
+            <a href="/patient/history"
+               class="menu-item">
+
+                <i class="fa-solid fa-file-medical"></i>
+
+            </a>
+
+        </div>
+
+        <a href="/logout"
+           class="menu-item">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+        </a>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div class="main">
+
+        <div class="top-bar">
+
+            <div class="title">
+
+                <h1>
+                    Select Specialty
+                </h1>
+
+                <p>
+                    BOOK YOUR MEDICAL APPOINTMENT
+                </p>
+
+            </div>
+
+            <div class="patient-box">
+                Patient Panel
+            </div>
+
+        </div>
+
+        <!-- SPECIALTY LIST -->
+
+        <div class="specialty-grid">
+
+            <a class="specialty-card"
+               th:each="s : ${specialties}"
+               th:href="@{'/patient/specialty/' + ${s.id} + '/doctors'}">
+
+                <div class="specialty-icon">
+                    <i class="fa-solid fa-user-doctor"></i>
+                </div>
+
+                <div class="arrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+
+                <h2 th:text="${s.name}">
+                </h2>
+
+                <p>
+                    View available doctors and schedule
+                    your appointment quickly and easily.
+                </p>
+
+            </a>
+
+        </div>
+
+    </div>
 
 </div>
 

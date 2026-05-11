@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Appointments</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins', sans-serif;
+        }
+
+        body{
+            background:#eef1f8;
+            min-height:100vh;
+        }
+
+        .dashboard{
+            display:flex;
+            min-height:100vh;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar{
+            width:110px;
+            background:#bfc8f3;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:space-between;
+            padding:30px 0;
+            border-radius:0 30px 30px 0;
+        }
+
+        .sidebar-top{
+            display:flex;
+            flex-direction:column;
+            gap:30px;
+        }
+
+        .logo{
+            width:58px;
+            height:58px;
+            background:#5b47c5;
+            border-radius:50%;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            color:white;
+            font-size:22px;
+            box-shadow:0 10px 20px rgba(91,71,197,0.3);
+        }
+
+        .menu-item{
+            width:58px;
+            height:58px;
+            border-radius:18px;
+            background:white;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#5b47c5;
+            font-size:20px;
+            transition:0.3s;
+            cursor:pointer;
+            text-decoration:none;
+        }
+
+        .menu-item.active{
+            background:#5b47c5;
+            color:white;
+            box-shadow:0 10px 20px rgba(91,71,197,0.3);
+        }
+
+        .menu-item:hover{
+            transform:translateY(-3px);
+        }
+
+        /* MAIN */
+
+        .main{
+            flex:1;
+            padding:40px;
+        }
+
+        .top-bar{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:35px;
+        }
+
+        .title h1{
+            font-size:42px;
+            color:#202020;
+        }
+
+        .title p{
+            color:#888;
+            margin-top:8px;
+            font-size:14px;
+            letter-spacing:1px;
+        }
+
+        .patient-box{
+            background:white;
+            padding:15px 25px;
+            border-radius:14px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.05);
+            color:#555;
+        }
+
+        /* ALERT */
+
+        .alert{
+            padding:18px;
+            border-radius:16px;
+            margin-bottom:25px;
+            font-weight:500;
+        }
+
+        .success{
+            background:#e6fff1;
+            color:#19b36b;
+        }
+
+        .error{
+            background:#ffe8e8;
+            color:#d62828;
+        }
+
+        /* TABLE CARD */
+
+        .table-card{
+            background:white;
+            border-radius:24px;
+            padding:30px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+        }
+
+        th{
+            background:#f5f3ff;
+            color:#5b47c5;
+            padding:18px;
+            text-align:left;
+            font-size:14px;
+        }
+
+        td{
+            padding:20px 18px;
+            border-bottom:1px solid #f1f1f1;
+            color:#444;
+            font-size:15px;
+        }
+
+        tr:hover{
+            background:#fafaff;
+        }
+
+        /* STATUS */
+
+        .status{
+            padding:8px 15px;
+            border-radius:30px;
+            font-size:13px;
+            font-weight:600;
+            display:inline-block;
+        }
+
+        .pending{
+            background:#fff4df;
+            color:#ff9800;
+        }
+
+        .confirmed{
+            background:#e9f3ff;
+            color:#3498db;
+        }
+
+        .completed{
+            background:#e6fff1;
+            color:#19b36b;
+        }
+
+        .cancelled{
+            background:#ffe8e8;
+            color:#d62828;
+        }
+
+        /* BUTTON */
+
+        .cancel-btn{
+            background:#ff4d4d;
+            color:white;
+            border:none;
+            padding:10px 18px;
+            border-radius:12px;
+            cursor:pointer;
+            font-weight:600;
+            transition:0.3s;
+        }
+
+        .cancel-btn:hover{
+            background:#d62828;
+            transform:translateY(-2px);
+        }
+
+        .disabled-btn{
+            background:#ddd;
+            color:#666;
+            border:none;
+            padding:10px 18px;
+            border-radius:12px;
+            font-weight:600;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:1000px){
+
+            table{
+                display:block;
+                overflow-x:auto;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <div class="sidebar-top">
+
+            <div class="logo">
+                <i class="fa-solid fa-heart-pulse"></i>
+            </div>
+
+            <a href="/patient/dashboard"
+               class="menu-item">
+
+                <i class="fa-solid fa-house"></i>
+
+            </a>
+
+            <a href="/patient/booking"
+               class="menu-item">
+
+                <i class="fa-solid fa-calendar-check"></i>
+
+            </a>
+
+            <a href="/patient/appointments"
+               class="menu-item active">
+
+                <i class="fa-solid fa-clock-rotate-left"></i>
+
+            </a>
+
+            <a href="/patient/history"
+               class="menu-item">
+
+                <i class="fa-solid fa-file-medical"></i>
+
+            </a>
+
+        </div>
+
+        <a href="/logout"
+           class="menu-item">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+        </a>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div class="main">
+
+        <div class="top-bar">
+
+            <div class="title">
+
+                <h1>
+                    My Appointments
+                </h1>
+
+                <p>
+                    SMART HEALTHCARE SYSTEM
+                </p>
+
+            </div>
+
+            <div class="patient-box">
+                Patient Panel
+            </div>
+
+        </div>
+
+        <!-- SUCCESS -->
+
+        <div th:if="${success}"
+             class="alert success">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <span th:text="${success}"></span>
+
+        </div>
+
+        <!-- ERROR -->
+
+        <div th:if="${error}"
+             class="alert error">
+
+            <i class="fa-solid fa-circle-xmark"></i>
+
+            <span th:text="${error}"></span>
+
+        </div>
+
+        <!-- TABLE -->
+
+        <div class="table-card">
+
+            <table>
+
+                <tr>
+
+                    <th>
+                        Doctor
+                    </th>
+
+                    <th>
+                        Date
+                    </th>
+
+                    <th>
+                        Time
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+                <tr th:each="a : ${appointments}">
+
+                    <td th:text="${a.doctor.user.username}">
+                    </td>
+
+                    <td th:text="${a.appointmentDate}">
+                    </td>
+
+                    <td th:text="${a.appointmentTime}">
+                    </td>
+
+                    <td>
+
+                        <span th:if="${a.status.name() == 'PENDING'}"
+                              class="status pending">
+
+                            Pending
+
+                        </span>
+
+                        <span th:if="${a.status.name() == 'CONFIRMED'}"
+                              class="status confirmed">
+
+                            Confirmed
+
+                        </span>
+
+                        <span th:if="${a.status.name() == 'COMPLETED'}"
+                              class="status completed">
+
+                            Completed
+
+                        </span>
+
+                        <span th:if="${a.status.name() == 'CANCELLED'}"
+                              class="status cancelled">
+
+                            Cancelled
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <form th:if="${a.status.name() != 'CANCELLED'}"
+                              th:action="@{'/patient/appointment/cancel/' + ${a.id}}"
+                              method="post">
+
+                            <button class="cancel-btn">
+
+                                <i class="fa-solid fa-ban"></i>
+
+                                Cancel
+
+                            </button>
+
+                        </form>
+
+                        <button th:if="${a.status.name() == 'CANCELLED'}"
+                                class="disabled-btn">
+
+                            Cancelled
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

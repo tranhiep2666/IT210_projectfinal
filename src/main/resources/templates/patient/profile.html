@@ -3,348 +3,497 @@
 <head>
     <title>Patient Profile</title>
 
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
     <style>
 
         *{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins', sans-serif;
         }
 
         body{
-            font-family: Arial, sans-serif;
-            background-color: #f4f7fb;
+            background:#eef1f8;
+            min-height:100vh;
         }
 
-        /* HEADER */
+        .dashboard{
+            display:flex;
+            min-height:100vh;
+        }
 
-        header{
-            background-color: #0077b6;
-            color: white;
+        /* SIDEBAR */
 
-            padding: 20px 60px;
+        .sidebar{
+            width:110px;
+            background:#bfc8f3;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:space-between;
+            padding:30px 0;
+            border-radius:0 30px 30px 0;
+        }
 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .sidebar-top{
+            display:flex;
+            flex-direction:column;
+            gap:30px;
         }
 
         .logo{
-            font-size: 28px;
-            font-weight: bold;
+            width:58px;
+            height:58px;
+            background:#5b47c5;
+            border-radius:50%;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            color:white;
+            font-size:22px;
+            box-shadow:0 10px 20px rgba(91,71,197,0.3);
         }
 
-        nav a{
-            color: white;
-            text-decoration: none;
-            margin-left: 30px;
-            font-size: 16px;
+        .menu-item{
+            width:58px;
+            height:58px;
+            border-radius:18px;
+            background:white;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#5b47c5;
+            font-size:20px;
+            transition:0.3s;
+            cursor:pointer;
+            text-decoration:none;
         }
 
-        /* CONTAINER */
+        .menu-item.active{
+            background:#5b47c5;
+            color:white;
+            box-shadow:0 10px 20px rgba(91,71,197,0.3);
+        }
 
-        .container{
-            max-width: 1100px;
-            margin: 50px auto;
+        .menu-item:hover{
+            transform:translateY(-3px);
+        }
 
-            display: grid;
-            grid-template-columns: 320px 1fr;
+        /* MAIN */
 
-            gap: 30px;
+        .main{
+            flex:1;
+            padding:40px;
+        }
+
+        .top-bar{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:40px;
+        }
+
+        .title h1{
+            font-size:42px;
+            color:#202020;
+        }
+
+        .title p{
+            color:#888;
+            margin-top:8px;
+            font-size:14px;
+            letter-spacing:1px;
+        }
+
+        .patient-box{
+            background:white;
+            padding:15px 25px;
+            border-radius:14px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.05);
+            color:#555;
+        }
+
+        /* CONTENT */
+
+        .content{
+            display:grid;
+            grid-template-columns:320px 1fr;
+            gap:30px;
         }
 
         /* PROFILE CARD */
 
         .profile-card{
-            background: white;
-
-            border-radius: 15px;
-
-            padding: 30px;
-
-            text-align: center;
-
-            box-shadow:
-                    0 2px 10px rgba(0,0,0,0.1);
+            background:white;
+            border-radius:28px;
+            padding:35px;
+            text-align:center;
+            box-shadow:0 10px 30px rgba(0,0,0,0.05);
         }
 
         .avatar{
-            width: 130px;
-            height: 130px;
-
-            border-radius: 50%;
-
-            margin: auto;
-
-            background-image:
-                    url('https://cdn-icons-png.flaticon.com/512/3135/3135715.png');
-
-            background-size: cover;
-            background-position: center;
-
-            margin-bottom: 20px;
+            width:130px;
+            height:130px;
+            border-radius:50%;
+            margin:auto;
+            margin-bottom:25px;
+            background-image:url('https://cdn-icons-png.flaticon.com/512/3135/3135715.png');
+            background-size:cover;
+            background-position:center;
+            border:6px solid #eee9ff;
         }
 
         .profile-card h2{
-            color: #023e8a;
-            margin-bottom: 10px;
+            color:#222;
+            margin-bottom:10px;
         }
 
         .profile-card p{
-            color: #666;
-            margin-bottom: 8px;
+            color:#777;
+            margin-bottom:8px;
         }
 
-        /* PROFILE FORM */
+        .badge{
+            display:inline-block;
+            margin-top:15px;
+            background:#eee9ff;
+            color:#5b47c5;
+            padding:10px 18px;
+            border-radius:14px;
+            font-size:14px;
+            font-weight:600;
+        }
+
+        /* FORM CARD */
 
         .profile-form{
-            background: white;
-
-            border-radius: 15px;
-
-            padding: 40px;
-
-            box-shadow:
-                    0 2px 10px rgba(0,0,0,0.1);
+            background:white;
+            border-radius:28px;
+            padding:40px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.05);
         }
 
         .profile-form h2{
-            margin-bottom: 30px;
-            color: #023e8a;
+            color:#222;
+            margin-bottom:30px;
+            font-size:28px;
+        }
+
+        .row{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:20px;
         }
 
         .form-group{
-            margin-bottom: 20px;
+            margin-bottom:22px;
         }
 
         label{
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #333;
+            display:block;
+            margin-bottom:10px;
+            color:#444;
+            font-weight:600;
         }
 
         input,
         select,
         textarea{
+            width:100%;
+            padding:15px;
+            border-radius:16px;
+            border:1px solid #ddd;
+            font-size:15px;
+            outline:none;
+            transition:0.3s;
+        }
 
-            width: 100%;
-
-            padding: 12px;
-
-            border: 1px solid #ccc;
-
-            border-radius: 8px;
-
-            font-size: 15px;
+        input:focus,
+        select:focus,
+        textarea:focus{
+            border-color:#5b47c5;
+            box-shadow:0 0 0 4px rgba(91,71,197,0.1);
         }
 
         textarea{
-            resize: vertical;
-            height: 100px;
-        }
-
-        .row{
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            resize:none;
+            min-height:120px;
         }
 
         .btn{
-            background-color: #0077b6;
-            color: white;
-
-            border: none;
-
-            padding: 14px 30px;
-
-            border-radius: 8px;
-
-            cursor: pointer;
-
-            font-size: 16px;
+            margin-top:10px;
+            border:none;
+            background:#5b47c5;
+            color:white;
+            padding:16px 30px;
+            border-radius:18px;
+            font-size:16px;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+            box-shadow:0 10px 20px rgba(91,71,197,0.25);
         }
 
         .btn:hover{
-            background-color: #005f8f;
+            background:#4837a7;
+            transform:translateY(-2px);
         }
 
-        footer{
-            background-color: #023e8a;
-            color: white;
+        /* RESPONSIVE */
 
-            text-align: center;
+        @media(max-width:1000px){
 
-            padding: 20px;
+            .content{
+                grid-template-columns:1fr;
+            }
 
-            margin-top: 50px;
+        }
+
+        @media(max-width:750px){
+
+            .dashboard{
+                flex-direction:column;
+            }
+
+            .sidebar{
+                width:100%;
+                height:90px;
+                flex-direction:row;
+                border-radius:0;
+                padding:0 20px;
+            }
+
+            .sidebar-top{
+                flex-direction:row;
+            }
+
+            .main{
+                padding:20px;
+            }
+
+            .row{
+                grid-template-columns:1fr;
+            }
+
         }
 
     </style>
+
 </head>
 
 <body>
 
-<!-- HEADER -->
+<div class="dashboard">
 
-<header>
+    <!-- SIDEBAR -->
 
-    <div class="logo">
-        Smart Healthcare
-    </div>
+    <div class="sidebar">
 
-    <nav>
+        <div class="sidebar-top">
 
-        <a href="/patient/dashboard">
-            Home
+            <div class="logo">
+                <i class="fa-solid fa-heart-pulse"></i>
+            </div>
+
+            <a href="/patient/dashboard"
+               class="menu-item">
+
+                <i class="fa-solid fa-house"></i>
+
+            </a>
+
+            <a href="/patient/booking"
+               class="menu-item">
+
+                <i class="fa-solid fa-calendar-check"></i>
+
+            </a>
+
+            <a href="/patient/appointments"
+               class="menu-item">
+
+                <i class="fa-solid fa-clock-rotate-left"></i>
+
+            </a>
+
+            <a href="/patient/profile"
+               class="menu-item active">
+
+                <i class="fa-solid fa-user"></i>
+
+            </a>
+
+        </div>
+
+        <a href="/logout"
+           class="menu-item">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
         </a>
-
-        <a href="/patient/booking">
-            Booking
-        </a>
-
-        <a href="/patient/history">
-            History
-        </a>
-
-        <a href="/logout">
-            Logout
-        </a>
-
-    </nav>
-
-</header>
-
-<!-- MAIN CONTENT -->
-
-<div class="container">
-
-    <!-- LEFT PROFILE CARD -->
-
-    <div class="profile-card">
-
-        <div class="avatar"></div>
-
-        <h2 th:text="${profile.fullName}">
-            John Doe
-        </h2>
-
-        <p th:text="${user.email}">
-            johndoe@gmail.com
-        </p>
-
-        <p>
-            Patient Account
-        </p>
 
     </div>
 
-    <!-- RIGHT FORM -->
+    <!-- MAIN -->
 
-    <div class="profile-form">
+    <div class="main">
 
-        <h2>
-            Personal Information
-        </h2>
+        <div class="top-bar">
 
-        <form th:action="@{/patient/profile/update}"
-              method="post"
-              th:object="${profile}">
-            <input type="hidden" th:field="*{id}">
+            <div class="title">
 
-            <div class="row">
+                <h1>
+                    Patient Profile
+                </h1>
 
-                <div class="form-group">
+                <p>
+                    MANAGE YOUR PERSONAL INFORMATION
+                </p>
 
-                    <label>
-                        Full Name
-                    </label>
+            </div>
 
-                    <input type="text"
-                           th:field="*{fullName}">
+            <div class="patient-box">
+                Patient Panel
+            </div>
 
-                </div>
+        </div>
 
-                <div class="form-group">
+        <!-- CONTENT -->
 
-                    <label>
-                        Phone Number
-                    </label>
+        <div class="content">
 
-                    <input type="text"
-                           th:field="*{phone}">
+            <!-- PROFILE CARD -->
 
+            <div class="profile-card">
+
+                <div class="avatar"></div>
+
+                <h2 th:text="${profile.fullName}">
+                    John Doe
+                </h2>
+
+                <p th:text="${user.email}">
+                    johndoe@gmail.com
+                </p>
+
+                <div class="badge">
+                    Patient Account
                 </div>
 
             </div>
 
-            <div class="row">
+            <!-- PROFILE FORM -->
 
-                <div class="form-group">
+            <div class="profile-form">
 
-                    <label>
-                        Gender
-                    </label>
+                <h2>
+                    Personal Information
+                </h2>
 
-                    <select th:field="*{gender}">
+                <form th:action="@{/patient/profile/update}"
+                      method="post"
+                      th:object="${profile}">
 
-                        <option value="Male">
-                            Male
-                        </option>
+                    <input type="hidden"
+                           th:field="*{id}">
 
-                        <option value="Female">
-                            Female
-                        </option>
+                    <div class="row">
 
-                    </select>
+                        <div class="form-group">
 
-                </div>
+                            <label>
+                                Full Name
+                            </label>
 
-                <div class="form-group">
+                            <input type="text"
+                                   th:field="*{fullName}">
 
-                    <label>
-                        Date of Birth
-                    </label>
+                        </div>
 
-                    <input type="date"
-                           th:field="*{dateOfBirth}">
+                        <div class="form-group">
 
-                </div>
+                            <label>
+                                Phone Number
+                            </label>
+
+                            <input type="text"
+                                   th:field="*{phone}">
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="form-group">
+
+                            <label>
+                                Gender
+                            </label>
+
+                            <select th:field="*{gender}">
+
+                                <option value="Male">
+                                    Male
+                                </option>
+
+                                <option value="Female">
+                                    Female
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>
+                                Date of Birth
+                            </label>
+
+                            <input type="date"
+                                   th:field="*{dateOfBirth}">
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Address
+                        </label>
+
+                        <textarea th:field="*{address}">
+                        </textarea>
+
+                    </div>
+
+                    <button type="submit"
+                            class="btn">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        Update Profile
+
+                    </button>
+
+                </form>
 
             </div>
 
-            <div class="form-group">
-
-                <label>
-                    Address
-                </label>
-
-                <textarea th:field="*{address}">
-                </textarea>
-
-            </div>
-
-            <button type="submit"
-                    class="btn">
-
-                Update Profile
-
-            </button>
-
-        </form>
+        </div>
 
     </div>
 
 </div>
-
-<!-- FOOTER -->
-
-<footer>
-
-    © 2025 Smart Healthcare Platform.
-    All rights reserved.
-
-</footer>
 
 </body>
 </html>

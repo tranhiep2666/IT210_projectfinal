@@ -49,6 +49,7 @@
             display:flex;
             flex-direction:column;
             gap:30px;
+            margin-bottom: 30px;
         }
 
         .logo{
@@ -113,14 +114,6 @@
             margin-top:8px;
             font-size:14px;
             letter-spacing:1px;
-        }
-
-        .project-select{
-            background:white;
-            padding:15px 25px;
-            border-radius:14px;
-            box-shadow:0 5px 15px rgba(0,0,0,0.05);
-            color:#555;
         }
 
         /* CARDS */
@@ -237,48 +230,6 @@
             color:white;
         }
 
-        /* RESPONSIVE */
-
-        @media(max-width:1100px){
-
-            .cards{
-                grid-template-columns:repeat(2,1fr);
-            }
-
-        }
-
-        @media(max-width:700px){
-
-            .dashboard{
-                flex-direction:column;
-            }
-
-            .sidebar{
-                width:100%;
-                height:90px;
-                flex-direction:row;
-                border-radius:0;
-                padding:0 20px;
-            }
-
-            .sidebar-top{
-                flex-direction:row;
-            }
-
-            .main{
-                padding:20px;
-            }
-
-            .cards{
-                grid-template-columns:1fr;
-            }
-
-            .actions{
-                flex-direction:column;
-            }
-
-        }
-
     </style>
 </head>
 <body>
@@ -286,36 +237,7 @@
 <div class="dashboard">
 
     <!-- SIDEBAR -->
-    <div class="sidebar">
-
-        <div class="sidebar-top">
-
-            <div class="logo">
-                <i class="fa-solid fa-prescription-bottle-medical"></i>
-            </div>
-
-            <div class="menu-item active">
-                <i class="fa-solid fa-chart-line"></i>
-            </div>
-
-            <a href="/admin/medicines" class="menu-item">
-                <i class="fa-solid fa-pills"></i>
-            </a>
-
-            <div class="menu-item">
-                <i class="fa-solid fa-user-doctor"></i>
-            </div>
-
-            <div class="menu-item">
-                <i class="fa-solid fa-file-medical"></i>
-            </div>
-
-        </div>
-
-        <div class="menu-item">
-            <i class="fa-solid fa-power-off"></i>
-        </div>
-
+    <div th:replace="~{fragments/admin-sidebar :: adminSidebar('dashboard')}">
     </div>
 
     <!-- MAIN CONTENT -->

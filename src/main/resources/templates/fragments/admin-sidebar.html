@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<body>
+
+<div th:fragment="adminSidebar(activePage)">
+
+    <div class="sidebar">
+
+        <div class="sidebar-top">
+
+            <div class="logo">
+                <i class="fa-solid fa-prescription-bottle-medical"></i>
+            </div>
+
+            <a href="/admin/dashboard"
+               class="menu-item"
+               th:classappend="${activePage == 'dashboard'} ? 'active'">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+            </a>
+
+            <a href="/admin/medicines"
+               class="menu-item"
+               th:classappend="${activePage == 'medicines'} ? 'active'">
+
+                <i class="fa-solid fa-pills"></i>
+
+            </a>
+
+            <a href="/admin/dispense"
+               class="menu-item"
+               th:classappend="${activePage == 'dispense'} ? 'active'">
+
+                <i class="fa-solid fa-capsules"></i>
+
+            </a>
+
+        </div>
+
+        <a href="/logout"
+           class="menu-item">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

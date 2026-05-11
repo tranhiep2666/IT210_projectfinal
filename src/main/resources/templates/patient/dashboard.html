@@ -187,23 +187,27 @@
 
     <nav>
 
-        <a href="/patient/dashboard">
+        <a th:href="@{/patient/dashboard}">
             Home
         </a>
 
-        <a href="/patient/booking">
+        <a th:href="@{/patient/booking}">
             Book Appointment
         </a>
 
-        <a href="/patient/history">
+        <a th:href="@{/patient/appointments}">
+            My Appointments
+        </a>
+
+        <a th:href="@{/patient/history}">
             Medical History
         </a>
 
-        <a href="/patient/profile">
+        <a th:href="@{/patient/profile}">
             Profile
         </a>
 
-        <a href="/logout">
+        <a th:href="@{/logout}">
             Logout
         </a>
 
@@ -227,7 +231,7 @@
             medical records management system.
         </p>
 
-        <a href="/patient/booking">
+        <a th:href="@{/patient/booking}">
 
             <button>
                 Book Appointment
@@ -266,9 +270,30 @@
                 appointment date and time quickly.
             </p>
 
-            <a href="/patient/booking">
+            <a th:href="@{/patient/booking}">
 
                 Book Now
+
+            </a>
+
+        </div>
+
+        <!-- APPOINTMENTS -->
+
+        <div class="card">
+
+            <h3>
+                My Appointments
+            </h3>
+
+            <p>
+                View your booked appointments,
+                cancel schedules and track status.
+            </p>
+
+            <a th:href="@{/patient/appointments}">
+
+                View Appointments
 
             </a>
 
@@ -287,7 +312,7 @@
                 prescriptions and treatment history.
             </p>
 
-            <a href="/patient/history">
+            <a th:href="@{/patient/history}">
 
                 View History
 
@@ -308,7 +333,7 @@
                 and healthcare account settings.
             </p>
 
-            <a href="#">
+            <a th:href="@{/patient/dashboard}">
 
                 Update Profile
 

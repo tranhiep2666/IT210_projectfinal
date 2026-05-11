@@ -33,4 +33,11 @@ public interface AppointmentRepository
 """)
     List<Appointment> findHistoryByUsername(String username);
 
+    boolean existsByDoctorAndAppointmentDateAndAppointmentTimeAndStatus(
+            Doctor doctor,
+            LocalDate date,
+            LocalTime time,
+            AppointmentStatus status
+    );
+
 }
