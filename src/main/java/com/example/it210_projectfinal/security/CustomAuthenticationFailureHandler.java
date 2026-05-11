@@ -12,20 +12,15 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class CustomAuthenticationFailureHandler
-        implements AuthenticationFailureHandler {
-
+public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(
             HttpServletRequest request,
             HttpServletResponse response,
             AuthenticationException exception
     ) throws IOException, ServletException {
-
         String username = request.getParameter("username");
-
         String error;
-
         if (exception instanceof UsernameNotFoundException) {
             error = "username";
         } else if (exception instanceof BadCredentialsException) {
@@ -33,7 +28,6 @@ public class CustomAuthenticationFailureHandler
         } else {
             error = "unknown";
         }
-
         response.sendRedirect(
                 "/auth/login?error=" + error
                         + "&username=" + username

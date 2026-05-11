@@ -16,64 +16,39 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class DispenseController {
-
-    private final PrescriptionRepository
-            prescriptionRepository;
-
-    private final MedicineRepository
-            medicineRepository;
-
+    private final PrescriptionRepository prescriptionRepository;
+    private final MedicineRepository medicineRepository;
     @GetMapping("/admin/dispense")
     public String dispensePage(Model model) {
-
         List<Prescription> prescriptions =
                 prescriptionRepository.findByStatus(
                         PrescriptionStatus.WAITING_DISPENSE
                 );
-
         model.addAttribute(
                 "prescriptions",
                 prescriptions
         );
-
         return "admin/dispense";
     }
-
     @GetMapping("/admin/dispense/{id}")
     public String confirmDispense(
             @PathVariable Long id
     ) {
-
         Prescription prescription =
                 prescriptionRepository
                         .findById(id)
                         .orElseThrow();
-
-        for (PrescriptionDetail detail
-                : prescription.getDetails()) {
-
+        for (PrescriptionDetail detail : prescription.getDetails()) {
             var medicine = detail.getMedicine();
-
-            int remain =
-                    medicine.getStockQuantity()
-                            - detail.getQuantity();
-
+            int remain = medicine.getStockQuantity() - detail.getQuantity();
             if (remain < 0) {
-
                 return "redirect:/admin/dispense?error=stock";
             }
-
             medicine.setStockQuantity(remain);
-
             medicineRepository.save(medicine);
         }
-
-        prescription.setStatus(
-                PrescriptionStatus.DISPENSED
-        );
-
+        prescription.setStatus(PrescriptionStatus.DISPENSED);
         prescriptionRepository.save(prescription);
-
         return "redirect:/admin/dispense";
     }
 }

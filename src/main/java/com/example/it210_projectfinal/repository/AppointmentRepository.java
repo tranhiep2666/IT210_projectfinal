@@ -8,19 +8,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-public interface AppointmentRepository
-        extends JpaRepository<Appointment, Long> {
-
+public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
     boolean existsByDoctorAndAppointmentDateAndAppointmentTime(
             Doctor doctor,
             LocalDate date,
             LocalTime time
     );
-
     List<Appointment> findByPatient(User patient);
-
     List<Appointment> findByDoctorId(Long doctorId);
-
     @Query("""
     SELECT DISTINCT a
     FROM Appointment a
@@ -32,12 +27,4 @@ public interface AppointmentRepository
     WHERE a.patient.username = :username
 """)
     List<Appointment> findHistoryByUsername(String username);
-
-    boolean existsByDoctorAndAppointmentDateAndAppointmentTimeAndStatus(
-            Doctor doctor,
-            LocalDate date,
-            LocalTime time,
-            AppointmentStatus status
-    );
-
 }

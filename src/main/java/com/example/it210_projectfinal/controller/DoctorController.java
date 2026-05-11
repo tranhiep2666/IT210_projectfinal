@@ -15,41 +15,20 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 public class DoctorController {
-
     private final UserRepository userRepository;
-
     private final DoctorRepository doctorRepository;
-
     private final AppointmentRepository appointmentRepository;
-
     @GetMapping("/doctor/dashboard")
     public String dashboard(Authentication authentication,
                             Model model) {
-
         User user = userRepository
                 .findByUsername(authentication.getName())
                 .orElseThrow();
-
-        System.out.println("USER ID = " + user.getId());
-
         Optional<Doctor> optionalDoctor =
                 doctorRepository.findByUserId(user.getId());
-
-        System.out.println(optionalDoctor);
-
         Doctor doctor = optionalDoctor.orElseThrow();
-
-        System.out.println("DOCTOR ID = " + doctor.getId());
-
-        List<Appointment> appointments =
-                appointmentRepository.findByDoctorId(
-                        doctor.getId()
-                );
-
-        System.out.println(appointments);
-
+        List<Appointment> appointments = appointmentRepository.findByDoctorId(doctor.getId());
         model.addAttribute("appointments", appointments);
-
         return "doctor/dashboard";
     }
 }

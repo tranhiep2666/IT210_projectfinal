@@ -13,17 +13,12 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class Medicine {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(nullable = false)
     private String name;
-
     private String description;
-
     private Integer stockQuantity;
-
     private BigDecimal price;
 }

@@ -10,17 +10,10 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(
-        name = "appointments",
-        uniqueConstraints = {
-                @UniqueConstraint(
-                        columnNames = {
-                                "doctor_id",
-                                "appointmentDate",
-                                "appointmentTime"
-                        }
-                )
-        }
+@Table(name = "appointments", uniqueConstraints = {@UniqueConstraint(columnNames = {
+        "doctor_id",
+        "appointmentDate",
+        "appointmentTime"})}
 )
 @Getter
 @Setter
@@ -28,28 +21,20 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 public class Appointment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private User patient;
-
     @ManyToOne
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
-
     private LocalDate appointmentDate;
-
     private LocalTime appointmentTime;
-
     @Enumerated(EnumType.STRING)
     private AppointmentStatus status;
-
     @OneToMany(mappedBy = "appointment")
     private Set<MedicalRecord> medicalRecords = new HashSet<>();
-
     private String reason;
 }

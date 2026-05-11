@@ -13,22 +13,15 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class UserProfile {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-
     private String fullName;
-
     private String phone;
-
     private String gender;
-
     private LocalDate dateOfBirth;
-
     private String address;
 }

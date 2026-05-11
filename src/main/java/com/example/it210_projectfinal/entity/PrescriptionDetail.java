@@ -13,26 +13,18 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class PrescriptionDetail {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     @JoinColumn(name = "prescription_id")
     private Prescription prescription;
-
     @ManyToOne
     @JoinColumn(name = "medicine_id")
     private Medicine medicine;
-
     private Integer quantity;
-
     private String dosage;
-
     private String instructions;
-
     private BigDecimal unitPrice;
-
     private BigDecimal subtotal;
 }

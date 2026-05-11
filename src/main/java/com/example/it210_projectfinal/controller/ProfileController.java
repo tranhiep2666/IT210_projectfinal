@@ -15,71 +15,46 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/patient/profile")
 @RequiredArgsConstructor
 public class ProfileController {
-
     private final UserRepository userRepository;
-
     private final UserProfileRepository profileRepository;
-
     @GetMapping
     public String profile(
             Authentication authentication,
-            Model model
-    ) {
-
-        CustomUserDetails userDetails =
-                (CustomUserDetails)
-                        authentication.getPrincipal();
-
+            Model model){
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         User user = userRepository
-                .findByUsername(
-                        userDetails.getUsername()
-                )
+                .findByUsername(userDetails.getUsername())
                 .orElseThrow();
-
-        UserProfile profile =
-                profileRepository
+        UserProfile profile = profileRepository
                         .findByUser(user)
                         .orElseThrow();
-
         model.addAttribute("user", user);
-
         model.addAttribute("profile", profile);
-
         return "patient/profile";
     }
-
     @PostMapping("/update")
     public String update(
             @ModelAttribute UserProfile updatedProfile
-    ) {
-
-        UserProfile profile =
-                profileRepository
+    ){
+        UserProfile profile = profileRepository
                         .findById(updatedProfile.getId())
                         .orElseThrow();
-
         profile.setFullName(
                 updatedProfile.getFullName()
         );
-
         profile.setPhone(
                 updatedProfile.getPhone()
         );
-
         profile.setGender(
                 updatedProfile.getGender()
         );
-
         profile.setDateOfBirth(
                 updatedProfile.getDateOfBirth()
         );
-
         profile.setAddress(
                 updatedProfile.getAddress()
         );
-
         profileRepository.save(profile);
-
         return "redirect:/patient/profile";
     }
 }

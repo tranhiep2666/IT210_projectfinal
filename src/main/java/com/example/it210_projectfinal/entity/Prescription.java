@@ -16,27 +16,20 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 public class Prescription {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @OneToOne
     @JoinColumn(name = "medical_record_id")
     private MedicalRecord medicalRecord;
-
     @Enumerated(EnumType.STRING)
     private PrescriptionStatus status;
-
     private BigDecimal totalAmount;
-
     private LocalDateTime issuedAt;
-
     @OneToMany(
             mappedBy = "prescription",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
     private Set<PrescriptionDetail> details = new HashSet<>();
-
 }

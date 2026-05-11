@@ -12,26 +12,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/patient/history")
 @RequiredArgsConstructor
 public class HistoryController {
-
     private final HistoryService historyService;
-
     @GetMapping
     public String history(
             Authentication authentication,
-            Model model
-    ) {
-
-        CustomUserDetails userDetails =
-                (CustomUserDetails)
-                        authentication.getPrincipal();
-
+            Model model){
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         model.addAttribute(
                 "appointments",
                 historyService.getHistory(
                         userDetails.getUsername()
                 )
         );
-
         return "patient/history";
     }
 }

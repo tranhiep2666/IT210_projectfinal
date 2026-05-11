@@ -6,14 +6,9 @@ import java.util.List;
 
 @Data
 public class ExaminationRequest {
-
     private Long appointmentId;
-
     private String symptoms;
-
     private String diagnosis;
-
     private String notes;
-
     private List<PrescriptionItemRequest> medicines;
 }

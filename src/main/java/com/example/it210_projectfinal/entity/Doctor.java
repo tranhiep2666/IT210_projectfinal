@@ -11,18 +11,14 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Doctor {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
-
     @ManyToOne
     @JoinColumn(name = "specialty_id")
     private Specialty specialty;
-
     private Integer experienceYears;
 }
