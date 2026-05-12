@@ -21,4 +21,7 @@ public class Doctor {
     @JoinColumn(name = "specialty_id")
     private Specialty specialty;
     private Integer experienceYears;
+    private String fullName;
+    private String phone;
+    private String qualification;
 }

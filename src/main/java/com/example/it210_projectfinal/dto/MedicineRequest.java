@@ -11,8 +11,8 @@ public class MedicineRequest {
     @NotBlank
     private String name;
     private String description;
-    @PositiveOrZero
+    @PositiveOrZero(message = "Quantity must be greater than 0")
     private Integer stockQuantity;
-    @PositiveOrZero
+    @PositiveOrZero(message = "Price must be greater than or equal to 0")
     private BigDecimal price;
 }

@@ -7,7 +7,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin/medicines")
@@ -32,10 +34,30 @@ public class MedicineController {
     }
     @PostMapping("/create")
     public String create(
-            @Valid
-            @ModelAttribute("medicine")
-            MedicineRequest request){
+            @Valid @ModelAttribute("medicine")
+            MedicineRequest request,
+            BindingResult result,
+            Model model,
+            RedirectAttributes redirectAttributes
+    ) {
+
+        if(result.hasErrors()){
+
+            model.addAttribute(
+                    "error",
+                    result.getFieldError().getDefaultMessage()
+            );
+
+            return "admin/create-medicine";
+        }
+
         medicineService.create(request);
+
+        redirectAttributes.addFlashAttribute(
+                "success",
+                "Medicine created successfully."
+        );
+
         return "redirect:/admin/medicines";
     }
     @GetMapping("/edit/{id}")

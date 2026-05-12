@@ -178,6 +178,29 @@
             font-size:20px;
         }
 
+        /* ALERT */
+
+        .alert{
+            padding:18px 22px;
+            border-radius:18px;
+            margin-bottom:30px;
+            display:flex;
+            align-items:center;
+            gap:12px;
+            font-weight:500;
+            box-shadow:0 10px 25px rgba(0,0,0,0.04);
+        }
+
+        .success-alert{
+            background:#e6fff1;
+            color:#19b36b;
+        }
+
+        .error-alert{
+            background:#ffe9e9;
+            color:#e03131;
+        }
+
         /* RESPONSIVE */
 
         @media(max-width:900px){
@@ -282,6 +305,27 @@
             <div class="patient-box">
                 Patient Panel
             </div>
+
+        </div>
+        <!-- ALERTS -->
+
+        <div th:if="${success}"
+             class="alert success-alert">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <span th:text="${success}">
+    </span>
+
+        </div>
+
+        <div th:if="${error}"
+             class="alert error-alert">
+
+            <i class="fa-solid fa-circle-exclamation"></i>
+
+            <span th:text="${error}">
+    </span>
 
         </div>
 
