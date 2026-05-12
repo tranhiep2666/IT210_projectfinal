@@ -1,6 +1,8 @@
 package com.example.it210_projectfinal.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -22,6 +24,8 @@ public class PrescriptionDetail {
     @ManyToOne
     @JoinColumn(name = "medicine_id")
     private Medicine medicine;
+    @NotNull(message = "Quantity is required")
+    @Min(value = 1, message = "Quantity must be greater than 0")
     private Integer quantity;
     private String dosage;
     private String instructions;
