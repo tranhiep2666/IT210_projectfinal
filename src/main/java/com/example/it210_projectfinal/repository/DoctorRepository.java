@@ -2,7 +2,6 @@ package com.example.it210_projectfinal.repository;
 
 import com.example.it210_projectfinal.entity.Doctor;
 import com.example.it210_projectfinal.entity.Specialty;
-import com.example.it210_projectfinal.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
